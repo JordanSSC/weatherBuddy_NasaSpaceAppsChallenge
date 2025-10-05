@@ -33,12 +33,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="index"
           options={{
-            // Título de la pantalla principal
-            title: 'Weather Buddy',
-            // Estilos del header que imitan a iOS
-            headerLargeTitle: true,
-            headerBlurEffect: 'regular',
-            headerTransparent: true,
+            headerShown: false,
           }}
         />
       </Stack>
