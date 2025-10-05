@@ -18,6 +18,18 @@ type StyledPickerProps = {
 export const StyledPicker = ({ label, items, selectedValue, onValueChange }: StyledPickerProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
+  // Obtener fecha actual
+  const now = new Date();
+  const currentDay = now.getDate();
+  const currentMonth = now.toLocaleString('es-ES', { month: 'long' });
+
+  // Determinar placeholder dinámico
+  let placeholder = 'Selecciona';
+  if (!selectedValue) {
+    if (label.toLowerCase().includes('mes')) placeholder = currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1);
+    else if (label.toLowerCase().includes('día')) placeholder = currentDay.toString();
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
@@ -29,7 +41,7 @@ export const StyledPicker = ({ label, items, selectedValue, onValueChange }: Sty
             activeOpacity={0.7}
           >
             <Text style={styles.selectedText}>
-              {items.find((item) => item.value === selectedValue)?.label || 'Selecciona'}
+              {items.find((item) => item.value === selectedValue)?.label || placeholder}
             </Text>
             <Ionicons name="chevron-down" size={30} color="#fff" style={styles.icon} />
           </TouchableOpacity>
@@ -90,7 +102,7 @@ export const StyledPicker = ({ label, items, selectedValue, onValueChange }: Sty
 const styles = StyleSheet.create({
   container: { flex: 1 },
   label: { fontFamily: 'Inter-Regular', fontSize: 14, color: '#333', marginBottom: 8 },
-  
+
   pickerContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: 12,

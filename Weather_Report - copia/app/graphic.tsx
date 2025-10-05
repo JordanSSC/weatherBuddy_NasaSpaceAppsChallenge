@@ -12,6 +12,7 @@ export default function GraphicScreen() {
   const { timeSeries: timeSeriesString, averageTemp } =
     useLocalSearchParams<{ timeSeries: string; averageTemp: string }>();
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLoadingDetail, setIsLoadingDetail] = useState(false);
 
   // --- Parseo seguro ---
   const timeSeries = useMemo<TimeSeries | null>(() => {
@@ -81,25 +82,33 @@ export default function GraphicScreen() {
             Temperatura Máxima Histórica (°C)
           </Text>
 
-          <TouchableOpacity
-            onPress={() => setModalVisible(true)}
-            activeOpacity={0.8}
-          >
-            <LineChart
-              data={chartDataMinimal}
-              width={Dimensions.get('window').width - 32}
-              height={220}
-              yAxisSuffix="°C"
-              chartConfig={chartConfig}
-              bezier
-              style={styles.chart}
-            />
-          </TouchableOpacity>
-
+          <LineChart
+            data={chartDataMinimal}
+            width={Dimensions.get('window').width - 32}
+            height={220}
+            yAxisSuffix="°C"
+            chartConfig={chartConfig}
+            bezier
+            style={styles.chart}
+          />
+          <View style={{ height: 4 }} />
           <Text style={styles.chartFooter}>
-            Temperatura {startYear} - {endYear} {'\n'}
-            <Text style={styles.chartHint}>(Toca para ver detalle)</Text>
+            Temperatura {startYear} - {endYear}
           </Text>
+          <View style={{ height: 16 }} />
+          <StyledButton
+            label="Ver detalle histórico"
+            loading={isLoadingDetail}
+            onPress={() => {
+              setIsLoadingDetail(true);
+              setTimeout(() => {
+                setIsLoadingDetail(false);
+                setModalVisible(true);
+              }, 900);
+            }}
+            style={{ marginTop: 8, marginBottom: 4 }}
+            disabled={isLoadingDetail}
+          />
         </View>
 
         {/* --- Resumen --- */}
@@ -183,6 +192,27 @@ const chartConfig = {
 };
 
 const styles = StyleSheet.create({
+  loadingOverlay: {
+    position: 'absolute',
+    top: 80,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  loadingText: {
+    backgroundColor: 'rgba(255,255,255,0.95)',
+    padding: 12,
+    borderRadius: 12,
+    fontSize: 18,
+    color: '#B91C1C',
+    fontWeight: 'bold',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 2,
+  },
   container: { flex: 1, backgroundColor: '#F0F0F7' },
   scrollContainer: { padding: 16 },
   errorText: {

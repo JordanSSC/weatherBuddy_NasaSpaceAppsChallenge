@@ -123,6 +123,16 @@ export default function CustomReportChat() {
     if (!userMsgText) return;
     addNewMessage({ id: Date.now(), sender: 'user', text: userMsgText });
     setInput('');
+    // Si el usuario dice gracias, responder con "Encantado de servirle" o similar
+    const lowerMsg = userMsgText.toLowerCase();
+    if (lowerMsg.includes('gracias') || lowerMsg.includes('thank you')) {
+      setIsTyping(true);
+      setTimeout(() => {
+        addNewMessage({ id: Date.now() + 1, sender: 'ai', text: '¡Encantado de servirle! 😊' });
+        setIsTyping(false);
+      }, 900);
+      return;
+    }
     setIsTyping(true);
     setTimeout(() => {
       addNewMessage({ id: Date.now() + 1, sender: 'ai', text: 'Gracias' });

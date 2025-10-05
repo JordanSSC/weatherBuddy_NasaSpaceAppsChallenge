@@ -7,6 +7,23 @@ import { StyledButton } from '../components/StyledButton';
 import { ProcessedWeatherData } from '../lib/weatherApi';
 
 export default function ReportScreen() {
+  // Función para obtener texto según probabilidad
+  function getLevelText(prob: number, type: 'calor' | 'frío' | 'lluvia' | 'viento') {
+    const map: Record<typeof type, string> = {
+      calor: 'caluroso',
+      frío: 'frío',
+      lluvia: 'lluvioso',
+      viento: 'ventoso',
+    };
+    if (prob >= 0.7) return `Muy ${map[type]}`;
+    if (prob >= 0.3) return `Medio ${map[type]}`;
+    return `Poco ${map[type]}`;
+  }
+
+  // Función para mostrar porcentaje
+  function formatPercent(prob: number) {
+    return `${Math.round(prob * 100)}%`;
+  }
   const router = useRouter();
   const { data: dataString } = useLocalSearchParams<{ data: string }>();
 
@@ -54,33 +71,33 @@ export default function ReportScreen() {
         </Text>
 
         <View style={styles.cardsContainer}>
-          <StatCard 
-            title="Muy Caluroso" 
+          <StatCard
+            title={getLevelText(data.hot.probability, 'calor')}
             probability={data.hot.probability}
-            description={`Probabilidad de condiciones > ${data.hot.threshold.toFixed(1)}°C`}
+            description={`Temperaturas > ${data.hot.threshold.toFixed(1)}°C\n${formatPercent(data.hot.probability)} de días cálidos en el histórico.`}
             backgroundColor="#FEE2E2"
             textColor="#B91C1C"
           />
-          <StatCard 
-            title="Muy Frío" 
+          <StatCard
+            title={getLevelText(data.cold.probability, 'frío')}
             probability={data.cold.probability}
-            description={`Probabilidad de condiciones < ${data.cold.threshold.toFixed(1)}°C`}
+            description={`Temperaturas < ${data.cold.threshold.toFixed(1)}°C\n${formatPercent(data.cold.probability)} de días fríos en el histórico.`}
             backgroundColor="#DBEAFE"
             textColor="#1E40AF"
           />
         </View>
         <View style={styles.cardsContainer}>
-          <StatCard 
-            title="Muy Lluvioso" 
+          <StatCard
+            title={getLevelText(data.wet.probability, 'lluvia')}
             probability={data.wet.probability}
-            description={`Probabilidad de condiciones > ${data.wet.threshold.toFixed(2)} mm/día`}
+            description={`Precipitación > ${data.wet.threshold.toFixed(2)} mm/día\n${formatPercent(data.wet.probability)} de días lluviosos en el histórico.`}
             backgroundColor="#CFFAFE"
             textColor="#0E7490"
           />
-          <StatCard 
-            title="Muy Ventoso" 
+          <StatCard
+            title={getLevelText(data.windy.probability, 'viento')}
             probability={data.windy.probability}
-            description={`Probabilidad de condiciones > ${data.windy.threshold.toFixed(1)} m/s`}
+            description={`Viento > ${data.windy.threshold.toFixed(1)} m/s\n${formatPercent(data.windy.probability)} de días ventosos en el histórico.`}
             backgroundColor="#E5E7EB"
             textColor="#1F2937"
           />
