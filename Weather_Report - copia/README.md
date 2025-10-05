@@ -40,12 +40,11 @@ WeatherBuddy permite consultar la probabilidad de condiciones adversas (muy calu
    - Consulta el reporte: verás probabilidades de calor, frío, lluvia, viento y condiciones incómodas, adaptadas a la zona y fecha.
    - Accede al gráfico histórico y al chat para recomendaciones personalizadas.
 
-## Notas para jueces
+## Observaciones
 
 - La app funciona en Expo Go, Android y iOS.
 - Los datos meteorológicos se obtienen en tiempo real de la NASA POWER API.
 - El reporte se adapta dinámicamente según la ubicación y fecha seleccionada.
-- El código está comentado y estructurado para facilitar la revisión.
 
 ## Recursos útiles
 
