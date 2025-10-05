@@ -1,64 +1,58 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# WeatherBuddy: Nasa Space Apps Challenge
 
-## Get started
+## Descripción del desafío
 
-1. Install dependencies
+WeatherBuddy permite consultar la probabilidad de condiciones adversas (muy caluroso, muy frío, muy lluvioso, muy ventoso, incómodo) para cualquier ubicación y fecha, usando datos de observación terrestre (NASA POWER API).
+
+## Funcionalidades principales
+
+- Selección de ubicación en el mapa 
+- Selección de fecha personalizada (día y mes).
+- Consulta de probabilidades de calor, frío, lluvia, viento y condiciones incómodas.
+- Reporte visual y gráfico histórico de temperaturas.
+- Chat personalizado para recomendaciones según el clima.
+
+## Pasos para probar la app
+
+1. **Instalar dependencias**
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. **Iniciar el proyecto Expo**
 
    ```bash
-   npx expo start
+   npx expo start --tunnel
    ```
 
-In the output, you'll find options to open the app in a
+3. **Abrir en dispositivo móvil**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   - Instala la app [Expo Go](https://expo.dev/go) en tu teléfono Android o iOS.
+   - Escanea el código QR que aparece en la terminal o navegador tras iniciar Expo.
+   - La app se abrirá en tu dispositivo y podrás interactuar con todas las funciones.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+4. **Probar funcionalidades**
 
-## Get a fresh project
+   - Selecciona una ubicación en el mapa (puedes buscar cualquier parte del mundo).
+   - Elige el día y mes para tu evento.
+   - Consulta el reporte: verás probabilidades de calor, frío, lluvia, viento y condiciones incómodas, adaptadas a la zona y fecha.
+   - Accede al gráfico histórico y al chat para recomendaciones personalizadas.
 
-When you're ready, run:
+## Notas para jueces
 
-```bash
-npm run reset-project
-```
+- La app funciona en Expo Go, Android y iOS.
+- Los datos meteorológicos se obtienen en tiempo real de la NASA POWER API.
+- El reporte se adapta dinámicamente según la ubicación y fecha seleccionada.
+- El código está comentado y estructurado para facilitar la revisión.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Recursos útiles
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
+- [Expo Docs](https://docs.expo.dev/)
+- [React Native Docs](https://reactnative.dev/)
+- [NASA POWER API](https://power.larc.nasa.gov/docs/services/api/temporal/daily/point/)
 
 - [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
 - [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-
-## OpenAI API Key
-
-This project includes a simple helper that calls the OpenAI Chat Completions API to provide a conversational "Reporte personalizado". To use it during development you must provide an OpenAI API key.
-
-1. Locally (Node / development builds): set the environment variable before starting Expo:
-
-```powershell
-setx OPENAI_API_KEY "sk-..." ; npm run start
-```
-
-2. With Expo config or secrets: you can inject the key into your native build config or use a secure secrets manager for production builds. Do NOT hard-code the key into your source.
-
-Security note: embedding the OpenAI API key in a client-side app (Expo Go or distributed builds) can expose it to end users. For production, run the OpenAI calls from a secure server (or serverless function) and have the app communicate with your backend.
